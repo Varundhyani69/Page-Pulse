@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sample Fixture Page</title>
+  <meta name="description" content="A fixture page used for unit testing the Page Pulse auditor." />
+  <style>body { font-family: sans-serif; }</style>
+</head>
+<body>
+  <h1>Main Heading</h1>
+  <h1>Second H1 — yes, two H1s on purpose</h1>
+
+  <!-- img WITH a proper alt — should NOT be counted -->
+  <img src="good.png" alt="A good image" />
+
+  <!-- img with empty alt — SHOULD be counted -->
+  <img src="empty-alt.png" alt="" />
+
+  <!-- img with no alt attribute at all — SHOULD be counted -->
+  <img src="no-alt.png" />
+
+  <p>The quick brown fox jumps over the lazy dog.</p>
+  <p>Page Pulse counts every whitespace-delimited token as a word.</p>
+
+  <script>
+    // This script content must NOT be counted toward word count.
+    var ignored = "script words should be excluded";
+  </script>
+</body>
+</html>

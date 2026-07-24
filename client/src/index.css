@@ -1,0 +1,413 @@
+/* ============================================================
+   Page Pulse — Global Styles
+   Design philosophy: clean card-based layout, neutral palette,
+   green accent for positive metrics, amber/red for issues.
+   ============================================================ */
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-bg:        #f5f7fa;
+  --color-surface:   #ffffff;
+  --color-border:    #e2e8f0;
+  --color-text:      #1a202c;
+  --color-muted:     #718096;
+  --color-accent:    #3b82f6;   /* blue — primary actions */
+  --color-ok:        #10b981;   /* green */
+  --color-warn:      #f59e0b;   /* amber */
+  --color-error:     #ef4444;   /* red */
+  --color-error-bg:  #fff5f5;
+  --radius:          10px;
+  --shadow:          0 2px 12px rgba(0, 0, 0, 0.07);
+  --shadow-lg:       0 4px 24px rgba(0, 0, 0, 0.10);
+  --transition:      0.18s ease;
+  font-size: 16px;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Screen-reader-only utility ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ---------- App shell ---------- */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 2rem 1.5rem 1.75rem;
+  text-align: center;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.logo-icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-accent);
+}
+
+.app-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.app-subtitle {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+/* ---------- Main content area ---------- */
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ---------- Audit form ---------- */
+.audit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.url-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.url-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.url-input:disabled {
+  background: var(--color-bg);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+.audit-btn {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), opacity var(--transition), transform var(--transition);
+  white-space: nowrap;
+}
+
+.audit-btn:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.audit-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.audit-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.form-hint {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  padding-left: 0.1rem;
+}
+
+/* ---------- Spinner ---------- */
+.spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem;
+}
+
+.spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner-text {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+/* ---------- Error card ---------- */
+.error-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: var(--color-error-bg);
+  border: 1.5px solid #fecaca;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+}
+
+.error-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 0.1rem;
+}
+
+.error-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.error-heading {
+  font-weight: 700;
+  color: #c53030;
+  font-size: 1rem;
+}
+
+.error-message {
+  color: #c53030;
+  font-size: 0.92rem;
+}
+
+.error-hint {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+/* ---------- Report card ---------- */
+.report-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.report-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(135deg, #eff6ff 0%, #f5f7fa 100%);
+}
+
+.report-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.report-url {
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  word-break: break-all;
+  text-decoration: none;
+}
+
+.report-url:hover {
+  text-decoration: underline;
+}
+
+.report-section {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.report-section:last-child {
+  border-bottom: none;
+}
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-muted);
+  margin-bottom: 0.85rem;
+}
+
+/* Identity block */
+.identity-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.identity-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.identity-key {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+.identity-val {
+  font-size: 0.92rem;
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+.missing {
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* Metrics grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.85rem;
+}
+
+.metric-tile {
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: box-shadow var(--transition);
+}
+
+.metric-tile:hover {
+  box-shadow: var(--shadow);
+}
+
+.metric-tile--highlight {
+  background: #fff5f5;
+  border-color: #fecaca;
+}
+
+.metric-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+}
+
+.metric-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.metric-note {
+  font-size: 0.78rem;
+  color: var(--color-error);
+  margin-top: 0.1rem;
+}
+
+/* Status colour helpers (used via cls prop) */
+.status-ok    { color: var(--color-ok); }
+.status-warn  { color: var(--color-warn); }
+.status-error { color: var(--color-error); }
+
+/* ---------- Footer ---------- */
+.app-footer {
+  text-align: center;
+  padding: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.footer-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 520px) {
+  .app-title { font-size: 1.4rem; }
+  .input-row { flex-direction: column; }
+  .audit-btn { width: 100%; }
+  .identity-row { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+}
