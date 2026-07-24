@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 import AuditForm from './components/AuditForm';
 import ReportCard from './components/ReportCard';
 import ErrorMessage from './components/ErrorMessage';
@@ -27,33 +28,22 @@ export default function App() {
     setError(null);
     setAuditedUrl('');
 
-    // In production (static site), VITE_API_URL points to the deployed server.
-    // In dev, Vite's proxy forwards /api/* to localhost:5000, so the empty
-    // string prefix is correct and no .env is needed locally.
+    // In production, VITE_API_URL points to the deployed server.
+    // In dev, Vite's proxy forwards /api/* to localhost:5000.
     const apiBase = import.meta.env.VITE_API_URL || '';
 
     try {
-      const res = await fetch(`${apiBase}/api/audit`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: submittedUrl }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        // The server always returns { error: "..." } for non-2xx responses.
-        setError({ status: res.status, message: data.error || 'Something went wrong.' });
+      const { data } = await axios.post(`${apiBase}/api/audit`, { url: submittedUrl });
+      setReport(data.report);
+      setAuditedUrl(data.url);
+    } catch (err) {
+      if (err.response) {
+        // Server responded with a non-2xx status
+        setError({ status: err.response.status, message: err.response.data.error || 'Something went wrong.' });
       } else {
-        setReport(data.report);
-        setAuditedUrl(data.url);
+        // Network error — server unreachable
+        setError({ status: 0, message: 'Could not reach the Page Pulse server. Make sure it is running.' });
       }
-    } catch {
-      // Network-level failure (server unreachable, no internet, etc.)
-      setError({
-        status: 0,
-        message: 'Could not reach the Page Pulse server. Make sure it is running.',
-      });
     } finally {
       setLoading(false);
     }
